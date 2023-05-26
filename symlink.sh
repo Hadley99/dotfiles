@@ -1,10 +1,20 @@
 #!/bin/bash
 
-# Define the dotfiles directory
 DOTFILES="$HOME/dotfiles"
 
+find_with_ignored_folders() {
+  ignored_folders=(".vscode" ".git")
+  # Construct the find command with ignored folders
+  find_command="find $DOTFILES -maxdepth 2 -name 'links.prop' "
+  for folder in "${ignored_folders[@]}"; do
+    find_command+=" -not -path '*$folder*'"
+  done
+
+  eval "$find_command"
+}
+
 install_sym_links() {
-  find "$DOTFILES" -maxdepth 2 -name 'links.prop' -not -path '*.git*' | while read -r linkfile; do
+  find_with_ignored_folders | while read -r linkfile; do
     while read -r line || [[ -n "$line" ]]; do
 
       src=$(eval echo "$line" | cut -d '=' -f 1)
@@ -14,6 +24,7 @@ install_sym_links() {
       # if [ -d "$dst" ]; then
       #   echo "directory \"$dst\" exists"
       # fi
+      # echo "$src $dst"
 
       mkdir -p "$dir"
       ln -sf "$src" "$dst"
