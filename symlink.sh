@@ -4,7 +4,6 @@ DOTFILES="$HOME/dotfiles"
 
 find_with_ignored_folders() {
   ignored_folders=(".vscode" ".git")
-  # Construct the find command with ignored folders
   find_command="find $DOTFILES -maxdepth 2 -name 'links.prop' "
   for folder in "${ignored_folders[@]}"; do
     find_command+=" -not -path '*$folder*'"
