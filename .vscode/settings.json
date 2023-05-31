@@ -18,5 +18,6 @@
     "titleBar.inactiveBackground": "#e9542099",
     "titleBar.inactiveForeground": "#33333399"
   },
-  "peacock.color": "#E95420"
+  "peacock.color": "#E95420",
+  "cSpell.words": ["catppuccin"]
 }
