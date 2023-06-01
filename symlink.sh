@@ -20,9 +20,11 @@ install_sym_links() {
       dst=$(eval echo "$line" | cut -d '=' -f 2)
       dir=$(dirname "$dst")
 
-      # if [ -d "$dst" ]; then
-      #   echo "directory \"$dst\" exists"
-      # fi
+      if [[ -L "$dst" ]]; then
+        echo "Skipping \"$dst\" - Already a symbolic link"
+        continue
+      fi
+
       # echo "$src $dst"
 
       mkdir -p "$dir"
