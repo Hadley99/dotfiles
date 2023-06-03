@@ -1,0 +1,2 @@
+$DOTFILES/rofi/config/config.rasi=$HOME/.config/rofi/config.rasi
+$DOTFILES/rofi/config/themes/=$HOME/.local/share/rofi/themes

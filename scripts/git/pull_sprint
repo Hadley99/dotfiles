@@ -1,0 +1,4 @@
+#! /bin/zsh
+
+gum spin --title "Chewing some $(gum style --foreground "#04B575" "$GUM") " --show-output -- git pull origin sprint"$1"-feature-"$2"
+# echo hello
