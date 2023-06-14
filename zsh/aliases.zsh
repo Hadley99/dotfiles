@@ -23,7 +23,7 @@ alias s='npm run start'
 
 # start custom
 alias sc='cd ~callable && nvm use 16 && npm run start:watch'
-alias sw='npm run winstart'
+alias sw='cd ~web && npm run winstart'
 
 # funcitons
 

@@ -19,5 +19,5 @@
     "titleBar.inactiveForeground": "#33333399"
   },
   "peacock.color": "#E95420",
-  "cSpell.words": ["Alacritty", "catppuccin", "Fullscreen"]
+  "cSpell.words": ["Alacritty", "catppuccin", "DOTFILES", "Fullscreen", "picom"]
 }
