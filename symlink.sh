@@ -2,35 +2,20 @@
 
 DOTFILES="$HOME/dotfiles"
 
-find_with_ignored_folders() {
-  ignored_folders=(".vscode" ".git" "scripts")
-  find_command="find $DOTFILES -maxdepth 2 -name 'links.prop' "
-  for folder in "${ignored_folders[@]}"; do
-    find_command+=" -not -path '*$folder*'"
-  done
+find "$DOTFILES" -maxdepth 2 -name 'links.prop' | while read -r linkfile; do
+  while read -r line || [[ -n "$line" ]]; do
 
-  eval "$find_command"
-}
+    src=$(eval echo "$line" | cut -d '=' -f 1)
+    dst=$(eval echo "$line" | cut -d '=' -f 2)
+    dir=$(dirname "$dst")
 
-install_sym_links() {
-  find_with_ignored_folders | while read -r linkfile; do
-    while read -r line || [[ -n "$line" ]]; do
+    if [[ -L "$dst" ]]; then
+      echo "Skipping \"$dst\" - Already a symbolic link"
+      continue
+    fi
 
-      src=$(eval echo "$line" | cut -d '=' -f 1)
-      dst=$(eval echo "$line" | cut -d '=' -f 2)
-      dir=$(dirname "$dst")
-
-      if [[ -L "$dst" ]]; then
-        echo "Skipping \"$dst\" - Already a symbolic link"
-        continue
-      fi
-
-      # echo "$src $dst"
-
-      mkdir -p "$dir"
-      ln -sf "$src" "$dst"
-    done <"$linkfile"
-  done
-}
-
-install_sym_links
+    echo "$src $dst"
+    mkdir -p "$dir"
+    ln -sf "$src" "$dst"
+  done <"$linkfile"
+done
