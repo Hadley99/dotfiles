@@ -29,9 +29,7 @@ end, {
 }), awful.key({MODKEY}, "Escape", awful.tag.history.restore, {
     description = "go back",
     group = "tag"
-}),
-
--- Cycle focus
+}), -- Cycle focus
 awful.key({"Mod1"}, "Tab", function()
     awful.client.focus.byidx(1)
     if client.focus then
@@ -49,9 +47,7 @@ awful.key({"Mod1", "Shift"}, "Tab", function()
 end, {
     description = "Cycle Through client (Reverse)",
     group = "client"
-}),
-
--- Focus
+}), -- Focus
 awful.key({MODKEY}, "h", function()
     awful.client.focus.bydirection('left')
 end, {
@@ -77,9 +73,7 @@ end, {
 end, {
     description = "show main menu",
     group = "awesome"
-}),
-
--- Layout manipulation
+}), -- Layout manipulation
 awful.key({MODKEY, "Shift"}, "h", function()
     awful.client.swap.bydirection("left")
 end, {
@@ -107,9 +101,7 @@ end, {
 awful.key({MODKEY}, "u", awful.client.urgent.jumpto, {
     description = "jump to urgent client",
     group = "client"
-}),
-
--- Standard program
+}), -- Standard program
 awful.key({MODKEY}, "Return", function()
     awful.spawn(TERMINAL)
 end, {
