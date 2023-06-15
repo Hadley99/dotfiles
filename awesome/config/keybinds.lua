@@ -4,8 +4,6 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 
 local keybinds = {}
 
--- local MODKEY = "Mod4"
-
 -- {{{ Key bindings
 keybinds.globalkeys = gears.table.join(awful.key({MODKEY}, "r", function()
     awful.spawn.with_shell("rofi -show drun")
