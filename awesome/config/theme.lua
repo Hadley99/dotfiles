@@ -3,6 +3,7 @@
 ---------------------------
 local theme_assets = require("beautiful.theme_assets")
 local xresources = require("beautiful.xresources")
+local gears = require("gears")
 local dpi = xresources.apply_dpi
 
 local gfs = require("gears.filesystem")
@@ -10,7 +11,7 @@ local themes_path = gfs.get_themes_dir()
 
 local theme = {}
 
-theme.font = "MesloLGS NF 8"
+theme.font = "Roboto"
 
 theme.bg_normal = "#222222"
 theme.bg_focus = "#535d6c"
@@ -23,8 +24,9 @@ theme.fg_focus = "#ffffff"
 theme.fg_urgent = "#ffffff"
 theme.fg_minimize = "#ffffff"
 
-theme.useless_gap = dpi(0)
-theme.border_width = dpi(1)
+theme.useless_gap = dpi(4)
+theme.gap_single_client = dpi(4)
+theme.border_width = dpi(0)
 theme.border_normal = "#000000"
 theme.border_focus = "#ffffff"
 theme.border_marked = "#91231c"
@@ -42,10 +44,33 @@ theme.border_marked = "#91231c"
 -- theme.taglist_bg_focus = "#ff0000"
 
 -- Generate taglist squares:
-local taglist_square_size = dpi(6)
+-- local taglist_square_size = dpi(6)
 
-theme.taglist_squares_sel = theme_assets.taglist_squares_sel(taglist_square_size, theme.fg_normal)
-theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(taglist_square_size, theme.fg_normal)
+-- theme.taglist_squares_sel = theme_assets.taglist_squares_sel(taglist_square_size, theme.fg_normal)
+-- theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(taglist_square_size, theme.fg_normal)
+
+-- theme.taglist_font = "Roboto Bold 10"
+theme.taglist_fg_focus = "#000000"
+theme.taglist_bg_focus = "#FFFFFF"
+-- theme.taglist_bg_empty = "#FF0000"
+-- theme.taglist_bg_occupied = "#FF0"
+theme.taglist_spacing = dpi(8)
+theme.taglist_shape_border_width = dpi(1)
+theme.taglist_shape_border_color = "#ffffff"
+
+theme.taglist_shape_empty = function(cr, width, height)
+    gears.shape.circle(cr, width, height, 5)
+end
+theme.taglist_shape = function(cr, width, height)
+    gears.shape.circle(cr, width, height, 5)
+end
+
+-- Notification Styles
+theme.notification_width = dpi(450)
+theme.notification_max_width = dpi(450)
+theme.notification_icon_size = dpi(66)
+-- theme.notification_margin = dpi(100)
+theme.notification_fg = "#FFFF"
 
 -- Variables set for theming notifications:
 -- notification_font
@@ -57,8 +82,8 @@ theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(taglist_square_
 -- menu_[bg|fg]_[normal|focus]
 -- menu_[border_color|border_width]
 theme.menu_submenu_icon = themes_path .. "default/submenu.png"
-theme.menu_height = dpi(15)
-theme.menu_width = dpi(100)
+theme.menu_height = dpi(20)
+theme.menu_width = dpi(150)
 
 -- You can add as many variables as
 -- you wish and access them by using
@@ -112,14 +137,13 @@ theme.layout_cornernw = themes_path .. "default/layouts/cornernww.png"
 theme.layout_cornerne = themes_path .. "default/layouts/cornernew.png"
 theme.layout_cornersw = themes_path .. "default/layouts/cornersww.png"
 theme.layout_cornerse = themes_path .. "default/layouts/cornersew.png"
+-- Set Awesome icon:
 
--- Generate Awesome icon:
-theme.awesome_icon = theme_assets.awesome_icon(theme.menu_height, theme.bg_focus, theme.fg_focus)
+theme.awesome_icon = "~/.config/awesome/icons/ubuntu-white.svg"
 
 theme.tasklist_disable_task_name = true
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
-theme.cursor_theme = themes_path .. "/home/hadley/.icons/volantes-dark/cursor.theme"
 theme.icon_theme = nil
 
 return theme

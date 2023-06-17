@@ -9,6 +9,7 @@ EDITOR_CMD = TERMINAL .. " -e " .. EDITOR
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
 
+local clock_widget = require("widgets.clock")
 -- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
@@ -125,7 +126,6 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- {{{ Wibar
 -- Create a textclock widget
-mytextclock = wibox.widget.textclock("%I:%M %p")
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(awful.button({}, 1, function(t)
@@ -180,13 +180,16 @@ end
 screen.connect_signal("property::geometry", set_wallpaper)
 
 awful.screen.connect_for_each_screen(function(s)
+    s.padding = {
+        top = -6
+    }
     -- Wallpaper
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
     --  circle icon
 
-    awful.tag({"1", "2", "3", "4", "5", "6", "7", "8", "9"}, s, awful.layout.layouts[1])
+    awful.tag({" ", " ", " ", " ", " ", " ", " ", " ", " "}, s, awful.layout.layouts[1])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -222,39 +225,36 @@ awful.screen.connect_for_each_screen(function(s)
     s.mywibox = awful.wibar({
         position = "top",
         screen = s,
-        height = 22,
-        margins = {
-            top = 12,
-            bottom = 5
-        }
+        height = 26,
+        border_width = 8
     })
-
-    local middle_widget = wibox.widget.textbox()
-    middle_widget.forced_width = 20
-
     -- Add widgets to the wibox
     s.mywibox:setup{
         expand = "none",
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
-            mylauncher,
+            spacing = 10,
+
+            wibox.container.margin(mylauncher, 4, 0, 0, 0), -- gives space to the left of the icon in the wibar
             s.mypromptbox,
-            middle_widget,
-            s.mytasklist -- Middle widget
+            s.mytaglist
+            -- s.mytasklist
         },
-        s.mytaglist,
-        -- middle_widget,
+
+        { -- Middle widgets
+            layout = wibox.layout.fixed.horizontal,
+            clock_widget
+        },
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            -- mykeyboardlayout,
             wibox.widget.systray(),
-            mytextclock,
             s.mylayoutbox
         }
 
     }
 end)
+
 -- }}}
 -- awful.mouse.snap.edge_enabled = false 
 -- {{{ Mouse bindings
@@ -345,11 +345,6 @@ end)
 -- }}}
 
 -- {{{ custom commands
-beautiful.gap_single_client = 6
-
-beautiful.useless_gap = 6
--- awful.spawn.with_shell('xinput --set-prop 13 "Coordinate Transformation Matrix" 0.55 0 0 0 0.55 0 0 0 1')
-
 awful.spawn("sh -c '~/.config/awesome/launch.sh'")
 -- custom commands }}}
 
