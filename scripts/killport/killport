@@ -1,0 +1,13 @@
+#! /usr/bin/bash
+
+port="$1"
+
+pid=$(sudo lsof -t -i :$port)
+
+if [ -z "$pid" ]; then
+    echo "No process found running on port $port."
+else
+    echo "Killing process with PID $pid running on port $port..."
+    sudo kill "$pid"
+    echo "Process terminated."
+fi

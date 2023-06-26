@@ -129,3 +129,21 @@ export NVM_DIR="$HOME/.nvm"
 if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
+
+# ! Custom functions
+autoload_scripts() {
+    local dir=$1
+
+    for entry in "$dir"/*; do
+        if [[ -d "$entry" ]]; then
+            autoload_scripts "$entry"
+        elif [[ -f "$entry" ]]; then
+            # echo "File: $entry"
+            autoload -Uz $entry
+        fi
+    done
+
+}
+
+autoload_scripts "$DOTFILES/scripts"
+

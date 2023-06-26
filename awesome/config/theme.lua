@@ -24,8 +24,8 @@ theme.fg_focus = "#ffffff"
 theme.fg_urgent = "#ffffff"
 theme.fg_minimize = "#ffffff"
 
-theme.useless_gap = dpi(4)
-theme.gap_single_client = dpi(4)
+theme.useless_gap = dpi(6)
+theme.gap_single_client = dpi(6)
 theme.border_width = dpi(0)
 theme.border_normal = "#000000"
 theme.border_focus = "#ffffff"
@@ -48,7 +48,11 @@ theme.border_marked = "#91231c"
 
 -- theme.taglist_squares_sel = theme_assets.taglist_squares_sel(taglist_square_size, theme.fg_normal)
 -- theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(taglist_square_size, theme.fg_normal)
-
+theme.hotkeys_font = "Roboto Bold 12"
+theme.hotkeys_description_font = "Roboto 10"
+theme.hotkeys_modifiers_fg = "#ffff"
+theme.hotkeys_fg = "#ffff"
+theme.hotkeys_group_margin = dpi(20)
 -- theme.taglist_font = "Roboto Bold 10"
 theme.taglist_fg_focus = "#000000"
 theme.taglist_bg_focus = "#FFFFFF"
@@ -71,7 +75,7 @@ theme.notification_max_width = dpi(450)
 theme.notification_icon_size = dpi(66)
 -- theme.notification_margin = dpi(100)
 theme.notification_fg = "#FFFF"
-
+theme.notification_margin = 20
 -- Variables set for theming notifications:
 -- notification_font
 -- notification_[bg|fg]
@@ -85,11 +89,12 @@ theme.menu_submenu_icon = themes_path .. "default/submenu.png"
 theme.menu_height = dpi(20)
 theme.menu_width = dpi(150)
 
+--  System Tray Styles
 -- You can add as many variables as
 -- you wish and access them by using
 -- beautiful.variable in your rc.lua
 -- theme.bg_widget = "#cc0000"
-theme.taglist_default_selected_bg = "#00aaff"
+-- theme.taglist_default_selected_bg = "#00aaff"
 -- Define the image to load
 theme.titlebar_close_button_normal = themes_path .. "default/titlebar/close_normal.png"
 theme.titlebar_close_button_focus = themes_path .. "default/titlebar/close_focus.png"
@@ -117,9 +122,8 @@ theme.titlebar_maximized_button_focus_inactive = themes_path .. "default/titleba
 theme.titlebar_maximized_button_normal_active = themes_path .. "default/titlebar/maximized_normal_active.png"
 theme.titlebar_maximized_button_focus_active = themes_path .. "default/titlebar/maximized_focus_active.png"
 
--- I dont think this line is working 
-theme.wallpaper = themes_path .. "~/Pictures/Wallpapers/oskar-kadaksoo-1ukY0AG4pIA-unsplash.jpg"
-
+-- Layout Widget Styles
+theme.layoutlist_bg_selected = "#FFF"
 -- You can use your own layout icons like this:
 theme.layout_fairh = themes_path .. "default/layouts/fairhw.png"
 theme.layout_fairv = themes_path .. "default/layouts/fairvw.png"

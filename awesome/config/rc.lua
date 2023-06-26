@@ -22,6 +22,7 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 local keybinds = require("keybinds")
+local volumeWidget = require("widgets.volume")
 local hotkeys_popup = require("awful.hotkeys_popup")
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
@@ -41,6 +42,7 @@ if awesome.startup_errors then
         text = awesome.startup_errors
     })
 end
+naughty.config.defaults.position = "bottom_right"
 
 -- client.connect_signal("manage", function (c)
 --     c.shape = function(cr,w,h)
@@ -79,11 +81,16 @@ beautiful.init("~/.config/awesome/theme.lua")
 -- However, you can use another modifier like Mod1, but it may interact with others.
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
-awful.layout.layouts = {awful.layout.suit.fair, awful.layout.suit.tile, awful.layout.suit.tile.left,
-                        awful.layout.suit.tile.bottom, awful.layout.suit.tile.top, awful.layout.suit.fair.horizontal,
-                        awful.layout.suit.spiral, awful.layout.suit.floating, awful.layout.suit.spiral.dwindle,
-                        awful.layout.suit.max, awful.layout.suit.max.fullscreen, awful.layout.suit.magnifier,
-                        awful.layout.suit.corner.nw -- awful.layout.suit.corner.ne,
+awful.layout.layouts = {awful.layout.suit.fair, awful.layout.suit.fair.horizontal, -- awful.layout.suit.tile,
+-- awful.layout.suit.tile.left,
+-- awful.layout.suit.tile.bottom,
+-- awful.layout.suit.tile.top,
+awful.layout.suit.floating, -- awful.layout.suit.spiral,
+-- awful.layout.suit.spiral.dwindle, 
+awful.layout.suit.max -- awful.layout.suit.max.fullscreen,
+-- awful.layout.suit.magnifier,
+-- awful.layout.suit.corner.nw, 
+-- awful.layout.suit.corner.ne,
 -- awful.layout.suit.corner.sw,
 -- awful.layout.suit.corner.se,
 }
@@ -112,7 +119,7 @@ else
     })
 end
 
-mylauncher = awful.widget.launcher({
+local mylauncher = awful.widget.launcher({
     image = beautiful.awesome_icon,
     menu = mymainmenu
 })
@@ -122,7 +129,7 @@ menubar.utils.TERMINAL = TERMINAL -- Set the terminal for applications that requ
 -- }}}
 
 -- Keyboard map indicator and switcher
-mykeyboardlayout = awful.widget.keyboardlayout()
+local mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- {{{ Wibar
 -- Create a textclock widget
@@ -164,27 +171,10 @@ end), awful.button({}, 5, function()
     awful.client.focus.byidx(-1)
 end))
 
-local function set_wallpaper(s)
-    -- Wallpaper
-    if beautiful.wallpaper then
-        local wallpaper = beautiful.wallpaper
-        -- If wallpaper is a function, call it with the screen
-        if type(wallpaper) == "function" then
-            wallpaper = wallpaper(s)
-        end
-        gears.wallpaper.maximized(wallpaper, s, true)
-    end
-end
-
--- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
-screen.connect_signal("property::geometry", set_wallpaper)
-
 awful.screen.connect_for_each_screen(function(s)
     s.padding = {
-        top = -6
+        top = -10
     }
-    -- Wallpaper
-    set_wallpaper(s)
 
     -- Each screen has its own tag table.
     --  circle icon
@@ -226,8 +216,12 @@ awful.screen.connect_for_each_screen(function(s)
         position = "top",
         screen = s,
         height = 26,
-        border_width = 8
+        border_width = 10, -- to adjust the gap bettwen the window top and wibar check the paading of 'awful.screen.connect_for_each_screen' above
+        shape = function(cr, width, height)
+            gears.shape.rounded_rect(cr, width, height, 16)
+        end
     })
+
     -- Add widgets to the wibox
     s.mywibox:setup{
         expand = "none",
@@ -244,12 +238,15 @@ awful.screen.connect_for_each_screen(function(s)
 
         { -- Middle widgets
             layout = wibox.layout.fixed.horizontal,
-            clock_widget
+            clock_widget,
+            spacing = 10
         },
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
+            spacing = 5,
+            wibox.container.margin(volumeWidget.icon_container, 0, 0, 0, 0),
             wibox.widget.systray(),
-            s.mylayoutbox
+            wibox.container.margin(s.mylayoutbox, 4, 4, 4, 4)
         }
 
     }
