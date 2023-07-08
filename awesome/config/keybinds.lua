@@ -111,13 +111,13 @@ end, {
 }), awful.key({MODKEY, "Shift"}, "q", awesome.quit, {
     description = "quit awesome",
     group = "awesome"
-}), awful.key({MODKEY}, "l", function()
-    awful.tag.incmwfact(0.05)
+}), awful.key({MODKEY}, "Up", function()
+    awful.client.incwfact(0.05)
 end, {
     description = "increase master width factor",
     group = "layout"
-}), awful.key({MODKEY}, "h", function()
-    awful.tag.incmwfact(-0.05)
+}), awful.key({MODKEY}, "Down", function()
+    awful.client.incwfact(-0.05)
 end, {
     description = "decrease master width factor",
     group = "layout"
