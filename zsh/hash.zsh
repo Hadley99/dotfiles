@@ -1,6 +1,6 @@
 # ~/work
 
-for file in ~/work/*; do
+for file in ~/Developer/work/*; do
     full_name=$(basename $file)
     shorted_name=${full_name#repair-serve-}
 
